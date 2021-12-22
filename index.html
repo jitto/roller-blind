@@ -1,0 +1,95 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<style>
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  display: block;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0, 0.9);
+}
+
+.overlay-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.overlay a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+    background-repeat:no-repeat;
+    padding: 40%; float:left; margin-right:10px;
+}
+
+.overlay a:hover, .overlay a:focus {
+  color: #f1f1f1;
+}
+
+.slider {
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    width: 10%;
+    height: 80%;
+    padding: 0 5px;
+}
+
+.float {
+   padding: 8px;
+   float: left;
+   width: 40%;
+   height: 100%;
+
+}
+
+
+</style>
+</head>
+<body>
+
+<div id='myNav' class='overlay'>
+  <div class='overlay-content'>
+    <div class="float">
+	    <a onclick='roller(1000)' href='#'>Top</a>
+	    <a onclick='roller_plus(100)' href='#'>Up</a>
+	    <a onclick='roller_minus(100)' href='#'>Down</a>
+	    <a onclick='roller(-1000)' href='#'>Bottom</a>
+    </div>
+   <div class=float>
+    <input id='slider' type='range' min='-1000' max='1000' value='0' class='slider' onchange='roller(this.value)'  orient="vertical"/>
+   </div>
+  </div>
+</div>
+
+<script>
+function roller_plus(value) {
+console.log(document.getElementById("slider").value);
+	roller(+document.getElementById("slider").value + value);
+}
+
+function roller_minus(value) {
+	roller(document.getElementById("slider").value - value);
+}
+
+function roller(value) {
+console.log(value);
+  fetch('/roller?value=' + value).then(response => console.log(response));
+  document.getElementById("slider").value = value;
+}
+</script>
+     
+</body>
+</html>
